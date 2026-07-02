@@ -2,7 +2,7 @@ from fastapi import FastAPI, HTTPException
 from fastapi import Depends
 from .database import engine
 from .models import Base
-from .routers import auth, internship, application
+from .routers import auth, internship, application, course, task, dashboard
 from .auth import (get_current_user, 
                    admin_required, 
                    student_required)
@@ -16,6 +16,10 @@ app = FastAPI(
 app.include_router(auth.router)
 app.include_router(internship.router)
 app.include_router(application.router)
+app.include_router(course.router)
+app.include_router(task.router)
+app.include_router(dashboard.router)
+
 @app.get("/")
 def home():
 
