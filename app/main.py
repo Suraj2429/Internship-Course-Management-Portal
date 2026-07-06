@@ -160,3 +160,31 @@ def admin_tasks_page(request: Request):
         request=request,
         name="admin_tasks.html"
     )
+
+# Admin Submission Review Page
+@app.get("/admin/submissions")
+def admin_submissions_page(request: Request):
+
+    return templates.TemplateResponse(
+        request=request,
+        name="admin_submissions.html"
+    )
+
+# Admin Certificate Page
+@app.get("/admin/certificates")
+def admin_certificates_page(request: Request):
+
+    return templates.TemplateResponse(
+        request=request,
+        name="admin_certificates.html"
+    )
+
+
+# Student Certificate Page
+@app.get("/student/certificates")
+def student_certificates_page(request: Request):
+
+    return templates.TemplateResponse(
+        request=request,
+        name="student_certificates.html"
+    )
