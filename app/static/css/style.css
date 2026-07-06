@@ -1,0 +1,220 @@
+/* ---------- Global Theme ---------- */
+
+:root {
+    --primary: #0f4c81;
+    --secondary: #1976d2;
+    --accent: #00bcd4;
+    --dark: #082f49;
+    --light-bg: #f1f7fc;
+    --white: #ffffff;
+    --text-dark: #1e293b;
+    --text-muted: #64748b;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    background-color: var(--light-bg);
+    color: var(--text-dark);
+    font-family: Arial, sans-serif;
+}
+
+
+/* ---------- Navbar ---------- */
+
+.portal-navbar {
+    background: linear-gradient(
+        90deg,
+        var(--dark),
+        var(--primary)
+    );
+
+    padding: 14px 0;
+}
+
+.navbar-brand {
+    font-size: 1.4rem;
+    font-weight: bold;
+}
+
+.portal-navbar .nav-link {
+    color: white;
+    margin-left: 10px;
+}
+
+.portal-navbar .nav-link:hover {
+    color: var(--accent);
+}
+
+
+/* ---------- Buttons ---------- */
+
+.btn-portal {
+    background: linear-gradient(
+        135deg,
+        var(--secondary),
+        var(--accent)
+    );
+
+    color: white;
+    border: none;
+    padding: 10px 24px;
+    border-radius: 8px;
+}
+
+.btn-portal:hover {
+    color: white;
+    opacity: 0.9;
+}
+
+
+/* ---------- Hero Section ---------- */
+
+.hero-section {
+    min-height: 520px;
+
+    display: flex;
+    align-items: center;
+
+    background:
+        linear-gradient(
+            135deg,
+            #e0f2fe,
+            #f8fafc
+        );
+}
+
+.hero-section h1 {
+    color: var(--dark);
+}
+
+.hero-section p {
+    color: var(--text-muted);
+}
+
+
+/* ---------- Cards ---------- */
+
+.portal-card {
+    border: none;
+    border-radius: 15px;
+    background-color: var(--white);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+    transition: 0.3s;
+}
+
+.portal-card:hover {
+    transform: translateY(-5px);
+}
+
+
+/* ---------- Authentication Pages ---------- */
+
+.auth-section {
+    min-height: calc(100vh - 70px);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 40px 15px;
+}
+
+.auth-card {
+    width: 100%;
+    max-width: 450px;
+
+    background: white;
+
+    padding: 35px;
+
+    border-radius: 16px;
+
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.10);
+}
+
+.auth-title {
+    color: var(--dark);
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.form-control {
+    padding: 12px;
+    border-radius: 8px;
+}
+
+.form-control:focus {
+    border-color: var(--accent);
+
+    box-shadow:
+        0 0 0 0.2rem
+        rgba(0, 188, 212, 0.15);
+}
+
+
+/* ---------- Dashboard ---------- */
+
+.dashboard-header {
+    background:
+        linear-gradient(
+            135deg,
+            var(--dark),
+            var(--primary)
+        );
+
+    color: white;
+
+    padding: 30px;
+
+    border-radius: 15px;
+}
+
+.stat-card {
+    background: white;
+
+    padding: 25px;
+
+    border-radius: 12px;
+
+    box-shadow:
+        0 4px 15px
+        rgba(0, 0, 0, 0.07);
+}
+
+.stat-number {
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--secondary);
+}
+
+
+/* ---------- Tables ---------- */
+
+.portal-table {
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.portal-table thead {
+    background-color: var(--primary);
+    color: white;
+}
+
+
+/* ---------- Footer ---------- */
+
+.portal-footer {
+    background-color: var(--dark);
+    color: white;
+    padding: 20px 0;
+    text-align: center;
+    margin-top: 50px;
+}

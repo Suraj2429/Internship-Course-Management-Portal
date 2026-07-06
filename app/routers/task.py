@@ -328,6 +328,8 @@ def my_submissions(
 
             "submission_id": submission.id,
 
+            "task_id": submission.task_id,
+
             "task": submission.task.title,
 
             "github_link": submission.github_link,

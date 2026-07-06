@@ -210,30 +210,17 @@ class TaskSubmission(Base):
     )
 
 class Certificate(Base):
-
     __tablename__ = "certificates"
 
     id = Column(Integer, primary_key=True)
 
-    student_id = Column(
-        Integer,
-        ForeignKey("users.id")
-    )
+    student_id = Column(Integer, ForeignKey("users.id"))
 
-    internship_id = Column(
-        Integer,
-        ForeignKey("internships.id")
-    )
+    internship_id = Column(Integer, ForeignKey("internships.id"))
 
-    certificate_number = Column(
-        String(50),
-        unique=True
-    )
+    certificate_number = Column(String(50), unique=True)
 
-    issued_date = Column(
-        DateTime,
-        default=datetime.utcnow
-    )
+    issued_date = Column(DateTime, default=datetime.utcnow)
 
     file_path = Column(String(255))
 

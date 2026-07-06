@@ -77,27 +77,118 @@ def my_applications(
     db: Session = Depends(get_db)
 ):
 
+    # Get logged-in student
     student = (
         db.query(User)
         .filter(User.email == user["email"])
         .first()
     )
 
+
+    # Get student's applications
     applications = (
         db.query(Application)
-        .filter(Application.student_id == student.id)
+        .filter(
+            Application.student_id == student.id
+        )
         .all()
     )
 
-    return applications
 
+    result = []
+
+
+    # Add internship details
+    for application in applications:
+
+        internship = (
+            db.query(Internship)
+            .filter(
+                Internship.id ==
+                application.internship_id
+            )
+            .first()
+        )
+
+
+        result.append({
+
+            "application_id": application.id,
+
+            "status": application.status,
+
+            "internship": {
+
+                "id": internship.id,
+
+                "title": internship.title,
+
+                "description":
+                    internship.description,
+
+                "duration":
+                    internship.duration,
+
+                "vacancies":
+                    internship.vacancies
+
+            }
+
+        })
+
+
+    return result
+
+# Admin view all applications
 @router.get("/")
 def all_applications(
     user=Depends(admin_required),
     db: Session = Depends(get_db)
 ):
 
-    return db.query(Application).all()
+    applications = db.query(Application).all()
+
+    result = []
+
+    for application in applications:
+
+        student = (
+            db.query(User)
+            .filter(
+                User.id == application.student_id
+            )
+            .first()
+        )
+
+        internship = (
+            db.query(Internship)
+            .filter(
+                Internship.id == application.internship_id
+            )
+            .first()
+        )
+
+        result.append({
+
+            "application_id": application.id,
+
+            "student": {
+                "id": student.id,
+                "name": student.full_name,
+                "email": student.email
+            },
+
+            "internship": {
+                "id": internship.id,
+                "title": internship.title,
+                "duration": internship.duration
+            },
+
+            "status": application.status
+        })
+
+    return result
+
 
 @router.put("/{application_id}/approve")
 def approve_application(
