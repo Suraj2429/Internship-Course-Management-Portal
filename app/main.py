@@ -151,3 +151,12 @@ def admin_applications_page(request: Request):
         request=request,
         name="admin_applications.html"
     )
+
+# Admin Task Management Page
+@app.get("/admin/tasks")
+def admin_tasks_page(request: Request):
+
+    return templates.TemplateResponse(
+        request=request,
+        name="admin_tasks.html"
+    )
