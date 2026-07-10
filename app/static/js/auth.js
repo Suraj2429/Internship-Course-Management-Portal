@@ -1,4 +1,7 @@
+// ========================================
 // Registration Form
+// ========================================
+
 const registerForm = document.getElementById("registerForm");
 
 if (registerForm) {
@@ -8,54 +11,103 @@ if (registerForm) {
         event.preventDefault();
 
         const data = {
-            full_name: document.getElementById("full_name").value,
-            email: document.getElementById("email").value,
-            password: document.getElementById("password").value
+
+            full_name:
+                document.getElementById("full_name").value,
+
+            email:
+                document.getElementById("email").value,
+
+            password:
+                document.getElementById("password").value
         };
 
-        const response = await fetch("/auth/register", {
-            method: "POST",
 
-            headers: {
-                "Content-Type": "application/json"
-            },
+        try {
 
-            body: JSON.stringify(data)
-        });
+            const response = await fetch("/auth/register", {
 
-        const result = await response.json();
+                method: "POST",
 
-        const message = document.getElementById("message");
+                headers: {
+                    "Content-Type": "application/json"
+                },
 
-        message.classList.remove(
-            "d-none",
-            "alert-success",
-            "alert-danger"
-        );
+                body: JSON.stringify(data)
+            });
 
-        if (response.ok) {
 
-            message.classList.add("alert-success");
+            const result = await response.json();
 
-            message.innerText =
-                "Registration successful. Redirecting to login...";
+            const message =
+                document.getElementById("message");
 
-            setTimeout(function () {
-                window.location.href = "/login";
-            }, 1500);
 
-        } else {
+            message.classList.remove(
+                "d-none",
+                "alert-success",
+                "alert-danger"
+            );
+
+
+            if (response.ok) {
+
+                message.classList.add(
+                    "alert-success"
+                );
+
+                message.innerText =
+                    "Registration successful. Redirecting to login...";
+
+
+                setTimeout(function () {
+
+                    window.location.href = "/login";
+
+                }, 1500);
+
+
+            } else {
+
+                message.classList.add(
+                    "alert-danger"
+                );
+
+                message.innerText =
+                    result.detail ||
+                    result.message ||
+                    "Registration failed";
+            }
+
+
+        } catch (error) {
+
+            console.error(
+                "Registration Error:",
+                error
+            );
+
+            const message =
+                document.getElementById("message");
+
+            message.classList.remove("d-none");
 
             message.classList.add("alert-danger");
 
             message.innerText =
-                result.detail || "Registration failed";
+                "Unable to connect to the server.";
         }
+
     });
+
 }
 
 
+
+// ========================================
 // Login Form
+// ========================================
+
 const loginForm = document.getElementById("loginForm");
 
 if (loginForm) {
@@ -64,12 +116,15 @@ if (loginForm) {
 
         event.preventDefault();
 
+
         const formData = new URLSearchParams();
+
 
         formData.append(
             "username",
             document.getElementById("email").value
         );
+
 
         formData.append(
             "password",
@@ -77,67 +132,178 @@ if (loginForm) {
         );
 
 
-        const response = await fetch("/auth/login", {
+        try {
 
-            method: "POST",
+            const response = await fetch("/auth/login", {
 
-            headers: {
-                "Content-Type":
-                    "application/x-www-form-urlencoded"
-            },
+                method: "POST",
 
-            body: formData
-        });
+                headers: {
 
+                    "Content-Type":
+                        "application/x-www-form-urlencoded"
+                },
 
-        const result = await response.json();
-
-        const message = document.getElementById("message");
-
-        message.classList.remove(
-            "d-none",
-            "alert-success",
-            "alert-danger"
-        );
+                body: formData
+            });
 
 
-        if (response.ok) {
+            const result = await response.json();
 
-        // Save token
-        localStorage.setItem(
-            "access_token",
-            result.access_token
-        );
 
-        // Save role
-        localStorage.setItem(
-            "user_role",
-            result.role
-        );
+            const message =
+                document.getElementById("message");
 
-        message.classList.add("alert-success");
-        message.innerText = "Login successful. Redirecting...";
 
-        setTimeout(function () {
+            message.classList.remove(
+                "d-none",
+                "alert-success",
+                "alert-danger"
+            );
 
-            if (result.role === "admin") {
 
-                window.location.href = "/admin/dashboard";
+            if (response.ok) {
+
+
+                // Save access token
+                localStorage.setItem(
+                    "access_token",
+                    result.access_token
+                );
+
+
+                // Save user role
+                localStorage.setItem(
+                    "user_role",
+                    result.role
+                );
+
+
+                message.classList.add(
+                    "alert-success"
+                );
+
+
+                message.innerText =
+                    "Login successful. Redirecting...";
+
+
+                setTimeout(function () {
+
+
+                    if (result.role === "admin") {
+
+                        window.location.href =
+                            "/admin/dashboard";
+
+                    } else {
+
+                        window.location.href =
+                            "/student/dashboard";
+
+                    }
+
+
+                }, 1000);
+
 
             } else {
 
-                window.location.href = "/student/dashboard";
+                message.classList.add(
+                    "alert-danger"
+                );
 
+
+                message.innerText =
+                    result.detail ||
+                    "Login failed";
             }
 
-        }, 1000);
 
-        } else {
+        } catch (error) {
 
-            message.classList.add("alert-danger");
+            console.error(
+                "Login Error:",
+                error
+            );
+
+
+            const message =
+                document.getElementById("message");
+
+
+            message.classList.remove(
+                "d-none"
+            );
+
+
+            message.classList.add(
+                "alert-danger"
+            );
+
 
             message.innerText =
-                result.detail || "Login failed";
+                "Unable to connect to the server.";
         }
+
     });
+
+}
+
+
+
+// ========================================
+// Show / Hide Password
+// ========================================
+
+function togglePassword() {
+
+    const passwordInput =
+        document.getElementById("password");
+
+
+    const eyeIcon =
+        document.getElementById("eyeIcon");
+
+
+    if (!passwordInput || !eyeIcon) {
+
+        return;
+    }
+
+
+    // Show password
+    if (passwordInput.type === "password") {
+
+        passwordInput.type = "text";
+
+
+        eyeIcon.classList.remove(
+            "bi-eye"
+        );
+
+
+        eyeIcon.classList.add(
+            "bi-eye-slash"
+        );
+
+
+    } else {
+
+
+        // Hide password
+        passwordInput.type = "password";
+
+
+        eyeIcon.classList.remove(
+            "bi-eye-slash"
+        );
+
+
+        eyeIcon.classList.add(
+            "bi-eye"
+        );
+
+    }
+
 }
