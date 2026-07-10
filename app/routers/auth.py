@@ -115,3 +115,33 @@ def login(
         "token_type": "bearer",
         "role": db_user.role
     }
+
+
+@router.put("/make-admin/{email}")
+def make_admin(
+    email: str,
+    db: Session = Depends(get_db)
+):
+
+    user = (
+        db.query(User)
+        .filter(User.email == email)
+        .first()
+    )
+
+    if not user:
+        raise HTTPException(
+            status_code=404,
+            detail="User not found"
+        )
+
+    user.role = "admin"
+
+    db.commit()
+    db.refresh(user)
+
+    return {
+        "message": "User role updated to admin",
+        "email": user.email,
+        "role": user.role
+    }
