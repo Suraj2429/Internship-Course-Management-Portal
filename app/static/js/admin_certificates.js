@@ -79,6 +79,13 @@ async function loadApprovedApplications() {
             );
 
 
+        // Update approved count
+        document.getElementById(
+            "approvedCount"
+        ).innerText =
+            approvedApplications.length;
+
+
         loadStudentOptions();
 
         displayApprovedApplications();
